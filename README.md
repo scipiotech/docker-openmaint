@@ -3,7 +3,9 @@ A fully functional openMAINT docker image with docker-compose for integrating wi
 
 ## Run using Docker Compose
 
-`docker-compose up`
+Download [docker-compose.yml](docker-compose.yml) file and run
+
+`docker-compose up --file /path/to/docker-compose.yml`
 
 After that a BIMServer will be available at [http://localhost:8890/bimserver/](), a GeoServer will be available at [http://localhost:8889/geoserver/]() and openMAINT will be available at [http://localhost:8888/openmaint/]().
 
