@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 PROJECT_NAME=openmainttest
-DOCKER_COMPOSE_FILE="docker-compose-test.yml"
+DOCKER_COMPOSE_FILE="docker-compose-bats.yml"
 
 @test "SETUP (start up docker-compose)" { 
 	run docker_compose up -d	
