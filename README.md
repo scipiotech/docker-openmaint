@@ -3,7 +3,7 @@ A fully functional openMAINT docker image with docker-compose for integrating wi
 
 ## Run using Docker Compose
 
-Download [docker-compose.yml](docker-compose.yml) file and run
+Download [docker-compose.yml](https://github.com/rsilva4/docker-openmaint/blob/master/docker-compose.yml) file and run
 
 `docker-compose up --file /path/to/docker-compose.yml`
 
@@ -13,7 +13,7 @@ Currently you will have to access BIMServer page and run the setup. Also in Geos
 
 ## Configuration
 
-Check [Dockerfile](Dockerfile) for available environment variables, they are pretty much self descriptive.
+Check [Dockerfile](https://github.com/rsilva4/docker-openmaint/blob/master/Dockerfile) for available environment variables, they are pretty much self descriptive.
 
 ## Notes
 
