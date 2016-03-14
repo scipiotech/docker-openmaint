@@ -1,0 +1,24 @@
+version: '2'
+services:
+  postgis:
+    #restart: always
+    image: kpettijohn/postgis:9.4
+    ports:
+      - "5555:5432"
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=postgres  
+  openmaint:
+    build: .
+    image: rsilva4/openmaint
+    ports:
+      - "8888:8080"
+    environment:
+      - BIM_ACTIVE=false
+      - BIM_USER=teststring
+      - GIS_ENABLED=false
+      - GEOSERVER_ON_OFF=off
+      - GEOSERVER_USER=teststring
+      - DEFAULT_LANG=ru
+    links:
+      - postgis:postgres      
