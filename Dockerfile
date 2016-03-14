@@ -54,6 +54,8 @@ COPY configuration /tmp/openmaint/configuration
 COPY docker-entrypoint.sh /
 WORKDIR $CATALINA_HOME
 
+## OPENMAINT CONFIGURATION {
+
 ENV OPENMAINT_DEFAULT_LANG=en
 
 ENV DB_USER=postgres \
@@ -72,6 +74,8 @@ ENV GIS_ENABLED=false \
 	GEOSERVER_URL=http://geoserver:8080/geoserver \
 	GEOSERVER_USER=admin \
 	GEOSERVER_PASSWORD=geoserver 
+
+## }
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
