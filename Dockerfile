@@ -66,7 +66,7 @@ ENV DB_USER=postgres \
 
 ENV BIM_ACTIVE=false \
 	BIM_URL=http://bimserver:8080/bimserver \
-	BIM_USER=admin@bimserver.com \
+	BIM_USER=admin@example.org \
 	BIM_PASSWORD=bimserver
 
 ENV GIS_ENABLED=false \

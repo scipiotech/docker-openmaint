@@ -106,7 +106,7 @@ setup_application () {
 }
 
 cleanup () {
-	rm -r /tmp/openmaint
+	rm -rf /tmp/openmaint
 }
 
 #END OF PRIVATE FUNCS
