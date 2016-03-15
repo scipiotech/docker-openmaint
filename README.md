@@ -24,4 +24,4 @@ Check [Dockerfile](https://github.com/rsilva4/docker-openmaint/blob/master/Docke
 
 ## Development notes
 
-If you wish to contribute be sure to run the `tests.bats` after your changes and ensuring that every test passes. Add more tests if necessary. Tests built using [BATS](https://github.com/sstephenson/bats) (Bash Automated Testing System).
+If you wish to contribute be sure to run the `test.bats` after your changes and ensuring that every test passes. Add more tests if necessary. Tests built using [BATS](https://github.com/sstephenson/bats) (Bash Automated Testing System).
