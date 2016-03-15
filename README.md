@@ -7,7 +7,7 @@ Download [docker-compose.yml](https://github.com/rsilva4/docker-openmaint/blob/m
 
 `docker-compose up --file /path/to/docker-compose.yml`
 
-After that a BIMServer will be available at [http://localhost:8890/bimserver/](), a GeoServer will be available at [http://localhost:8889/geoserver/]() and openMAINT will be available at [http://localhost:8888/openmaint/]().
+After that a BIMServer will be available at [http://localhost:8890/bimserver/](http://localhost:8890/bimserver/), a GeoServer will be available at [http://localhost:8889/geoserver/](http://localhost:8889/geoserver/) and openMAINT will be available at [http://localhost:8888/openmaint/](http://localhost:8888/openmaint/).
 
 Currently you will have to access BIMServer page and run the setup. Also in Geoserver you should configure the `cmdbuild` workspace or whatever name you have chosen on openMAINT
 
