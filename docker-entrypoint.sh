@@ -51,6 +51,20 @@ wait_for_host_and_port_to_open () {
 	done
 }
 
+wait_for_http_url () {
+	RETRIES=0
+	MAX_RETRIES=5
+	while ! curl --output /dev/null --silent --head --fail "$1"; 
+	do 
+		echo "Waiting for url $1 to become available ($RETRIES)";
+		sleep 15;
+		RETRIES=$((RETRIES+1))
+		if [ "$RETRIES" -gt "$MAX_RETRIES" ]; then
+			exit 4;
+		fi
+	done
+}
+
 set_database_search_path () {
 	psql_command "ALTER DATABASE ${DB_NAME} SET search_path=shark,public,gis;"
 }
@@ -80,7 +94,19 @@ setup_conf_file_bim () {
 	setup_conf_file "bim"
 }
 
-setup_conf_file_gis () {	
+add_geoserver_workspace () {
+	if [ $GIS_ENABLED = "true" ] && [ $GEOSERVER_ON_OFF = "on" ]; then
+		wait_for_http_url $GEOSERVER_URL
+		curl --basic -u "${GEOSERVER_USER}:${GEOSERVER_PASSWORD}" -X POST -H "Content-Type: application/json" -d '{  
+		  "workspace": {
+		    "name": "'"${GEOSERVER_WORKSPACE}"'"
+		  }
+		}' "${GEOSERVER_URL}/rest/workspaces.json"
+	fi
+}
+
+setup_gis () {	
+	add_geoserver_workspace
 	GEOSERVER_URL=$(echo $GEOSERVER_URL | sed 's|:|\\:|g')
 	setup_conf_file "gis"
 }
@@ -92,7 +118,7 @@ configure_application () {
 	setup_conf_file "cmdbuild"	
 	setup_conf_file "workflow"	
 	setup_conf_file_bim
-	setup_conf_file_gis
+	setup_gis
 }
 
 setup_application () {		
@@ -113,7 +139,7 @@ cleanup () {
 
 if [ "$1" = 'openmaint' ]; then	
 	setup_application
-	setup_database
+	setup_database	
 	cleanup
 	exec catalina.sh run
 fi

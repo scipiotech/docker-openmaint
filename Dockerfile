@@ -73,7 +73,8 @@ ENV GIS_ENABLED=false \
 	GEOSERVER_ON_OFF=off \
 	GEOSERVER_URL=http://geoserver:8080/geoserver \
 	GEOSERVER_USER=admin \
-	GEOSERVER_PASSWORD=geoserver 
+	GEOSERVER_PASSWORD=geoserver \
+	GEOSERVER_WORKSPACE=cmdbuild
 
 ## }
 
