@@ -24,6 +24,7 @@ services:
       - BIM_ACTIVE=true
       - GIS_ENABLED=true
       - GEOSERVER_ON_OFF=on
+      - DB_NAME=cmdbuild
     links:
       - postgis:postgres
       - geoserver
