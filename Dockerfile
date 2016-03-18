@@ -41,7 +41,7 @@ RUN set -x \
 EXPOSE 8080
 
 RUN	apt-get update && \
-	apt-get install -y postgresql-client netcat unzip gettext-base
+	apt-get install -y postgresql-client netcat unzip gettext-base fontconfig
 
 WORKDIR /tmp
 ENV OPENMAINT_ZIP_URL http://downloads.sourceforge.net/project/openmaint/1.0/openmaint-1.0-2.3.1.zip
@@ -62,7 +62,7 @@ ENV DB_USER=postgres \
 	DB_PASS=test \	
 	DB_HOST=postgres \
 	DB_PORT=5432 \
-	DB_NAME=openmaint
+	DB_NAME=cmdbuild
 
 ENV BIM_ACTIVE=false \
 	BIM_URL=http://bimserver:8080/bimserver \
