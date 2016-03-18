@@ -1,7 +1,6 @@
 version: '2'
 services:
-  postgis:
-    #restart: always
+  postgis:    
     image: kpettijohn/postgis:9.4 #mdillon/postgis:9.5
     ports:
       - "5555:5432"
