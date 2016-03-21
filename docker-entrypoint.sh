@@ -37,32 +37,44 @@ set_db_pass_for_psql () {
 	chmod 0600 ~/.pgpass
 }
 
-wait_for_host_and_port_to_open () {
-	RETRIES=0
-	MAX_RETRIES=5
-	while ! nc -z $1 $2 </dev/null; 
+try_until_condition_or_max_retries_with_exit_function (){
+	RETRIES=1
+	MAX_RETRIES=$3
+	while ! eval $2; 
 	do 
-		echo "Waiting for host $1 to become available on port $2 ($RETRIES)";
-		sleep 15;
+		echo "Trying.. $RETRIES"
 		RETRIES=$((RETRIES+1))
+		eval $1
 		if [ "$RETRIES" -gt "$MAX_RETRIES" ]; then
-			exit 4;
+			eval $4;
 		fi
-	done
+	done	
 }
 
-wait_for_http_url () {
-	RETRIES=0
-	MAX_RETRIES=5
-	while ! curl --output /dev/null --silent --head --fail "$1"; 
-	do 
-		echo "Waiting for url $1 to become available ($RETRIES)";
-		sleep 15;
-		RETRIES=$((RETRIES+1))
-		if [ "$RETRIES" -gt "$MAX_RETRIES" ]; then
-			exit 4;
-		fi
-	done
+sleep_until_condition_or_max_retries_with_exit_code (){
+	try_until_condition_or_max_retries_with_exit_function "sleep $1" "$2" "$3" "exit $4"
+}
+
+sleep_until_condition_or_max_retries (){
+	try_until_condition_or_max_retries_with_exit_function "sleep $1" "$2" "$3" "break"
+}
+
+host_and_port_is_open () {
+	nc -z $1 $2 </dev/null
+}
+
+url_is_up () {
+	curl --output /dev/null --silent --head --fail $1
+}
+
+wait_for_host_and_port_to_open () {
+	echo "Waiting for host $1 to become available on port $2";
+	sleep_until_condition_or_max_retries_with_exit_code 15 "host_and_port_is_open $1 $2" 5 4	
+}
+
+non_exiting_wait_for_http_url () {
+	echo "Waiting for url $1 to become available";
+	sleep_until_condition_or_max_retries 2 "url_is_up $1" 5	
 }
 
 set_database_search_path () {
@@ -94,19 +106,19 @@ setup_conf_file_bim () {
 	setup_conf_file "bim"
 }
 
-add_geoserver_workspace () {
+try_to_add_geoserver_workspace () {
 	if [ $GIS_ENABLED = "true" ] && [ $GEOSERVER_ON_OFF = "on" ]; then
-		wait_for_http_url $GEOSERVER_URL
+		non_exiting_wait_for_http_url $GEOSERVER_URL
 		curl --basic -u "${GEOSERVER_USER}:${GEOSERVER_PASSWORD}" -X POST -H "Content-Type: application/json" -d '{  
 		  "workspace": {
 		    "name": "'"${GEOSERVER_WORKSPACE}"'"
 		  }
-		}' "${GEOSERVER_URL}/rest/workspaces.json"
+		}' "${GEOSERVER_URL}/rest/workspaces.json" || true # don't fail if not available or duplicate
 	fi
 }
 
 setup_gis () {	
-	add_geoserver_workspace
+	try_to_add_geoserver_workspace
 	GEOSERVER_URL=$(echo $GEOSERVER_URL | sed 's|:|\\:|g')
 	setup_conf_file "gis"
 }
