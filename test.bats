@@ -4,8 +4,8 @@ PROJECT_NAME=openmainttest
 DOCKER_COMPOSE_FILE="docker-compose-bats.yml"
 
 @test "SETUP (start up docker-compose)" { 
-	run docker_compose up -d	
-	result="$(docker ps -q -f "name=$PROJECT_NAME_" | wc -l)"
+	run docker_compose up -d
+	result="$(docker ps -q -f "name=${PROJECT_NAME}_" | wc -l)"
 	[ "$status" -eq 0 ]  
 	[ "$result" -eq 2 ]  
 }
@@ -52,7 +52,7 @@ DOCKER_COMPOSE_FILE="docker-compose-bats.yml"
 @test "TEARDOWN" {  
 	docker_compose stop
 	run docker_compose rm -f -v
-	result="$(docker ps -a -q -f "name=$PROJECT_NAME_" | wc -l)"
+	result="$(docker ps -a -q -f "name=${PROJECT_NAME}_" | wc -l)"
 	[ "$status" -eq 0 ]  
 	[ "$result" -eq 0 ]  
 }
