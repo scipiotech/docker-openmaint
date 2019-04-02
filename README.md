@@ -1,4 +1,4 @@
-https://panel.dreamhost.com/signup/#!/dreampress/domain?plan=standard&term=yearly
+[![Build Status](https://dev.azure.com/moett/Property Management System/_apis/build/status/scipiotech.docker-openmaint%20(1)?branchName=master)](https://dev.azure.com/moett/Property Management System/_build/latest?definitionId=3&branchName=master)
 # docker-openmaint
 A fully functional openMAINT docker image with docker-compose for integrating with Postgres, BIMServer and GeoServer
 
